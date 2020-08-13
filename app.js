@@ -3,7 +3,7 @@ const BOARD_HEIGHT = 8;
 
 const TILE_SIZE = 5;
 const WHITE_TILE_COLOR = "white";
-const BLICK_TILE_COLOR = "black";
+const BLACK_TILE_COLOR = "black";
 const HIGHLIGHT_COLOR = "red";
 const WHITE = 0;
 const BLACK = 1;
@@ -119,7 +119,7 @@ function onClick(event) {
 function checkPossiblePlays() {
   if (curX < 0 || curY < 0) return;
 
-  let tule = board.tile[curY][curX];
+  let tile = board.tiles[curY][curX];
   if (tile.team === EMPTY || tile.team !== currentTeam) return;
 
   drawTile(curX, curY, HIGHLIGHT_COLOR);
@@ -336,5 +336,126 @@ function drawPieces() {
         TILE_SIZE * (i + 4 / 5)
       );
     }
+  }
+}
+
+function updateWhiteCasualities() {
+  updateCasualties(whiteCasualities, whiteCasualitiesText);
+}
+
+function updateBlackCasualities() {
+  updateCasualties(blackCasualities, blackCasualitiesText);
+}
+
+function updateCasualties(casualities, text) {
+  let none = true;
+  for (let i = QUEEN; i >= PAWN; i--) {
+    if (casualities[i] === 0) continue;
+
+    if (none) {
+      text.textContent = casualities[i] + " " + peicesCharacters[i];
+    }
+  }
+  if (none) text.textContent = "None";
+}
+
+function updateTotalVictories() {
+  totalVictoriesText.textContent = `Game won: White ${whiteVictories} - black ${blackVictories} `;
+}
+
+function getOppositeTeam(team) {
+  if (team === WHITE) return BLACK;
+  else if (team === BLACK) return WHITE;
+  else return EMPTY;
+}
+
+class Board {
+  constructor() {
+    this.tiles = [];
+
+    this.tiles.push([
+      new Tile(ROOK, BLACK),
+      new Tile(KNIGHT, BLACK),
+      new Tile(BISHOP, BLACK),
+      new Tile(QUEEN, BLACK),
+      new Tile(KING, BLACK),
+      new Tile(BISHOP, BLACK),
+      new Tile(KNIGHT, BLACK),
+      new Tile(ROOK, BLACK),
+    ]);
+
+    this.tiles.push([
+      new Tile(PAWN, BLACK),
+      new Tile(PAWN, BLACK),
+      new Tile(PAWN, BLACK),
+      new Tile(PAWN, BLACK),
+      new Tile(PAWN, BLACK),
+      new Tile(PAWN, BLACK),
+      new Tile(PAWN, BLACK),
+      new Tile(PAWN, BLACK),
+    ]);
+
+    for (let i = 0; i < 4; i++) {
+      this.tiles.push([
+        new Tile(EMPTY, EMPTY),
+        new Tile(EMPTY, EMPTY),
+        new Tile(EMPTY, EMPTY),
+        new Tile(EMPTY, EMPTY),
+        new Tile(EMPTY, EMPTY),
+        new Tile(EMPTY, EMPTY),
+        new Tile(EMPTY, EMPTY),
+        new Tile(EMPTY, EMPTY),
+      ]);
+    }
+
+    this.tiles.push([
+      new Tile(PAWN, WHITE),
+      new Tile(PAWN, WHITE),
+      new Tile(PAWN, WHITE),
+      new Tile(PAWN, WHITE),
+      new Tile(PAWN, WHITE),
+      new Tile(PAWN, WHITE),
+      new Tile(PAWN, WHITE),
+      new Tile(PAWN, WHITE),
+    ]);
+
+    this.tiles.push([
+      new Tile(ROOK, WHITE),
+      new Tile(KNIGHT, WHITE),
+      new Tile(BISHOP, WHITE),
+      new Tile(KING, WHITE),
+      new Tile(QUEEN, WHITE),
+      new Tile(BISHOP, WHITE),
+      new Tile(KNIGHT, WHITE),
+      new Tile(ROOK, WHITE),
+    ]);
+
+    this.validMoves = [];
+    for (let i = 0; i < BOARD_HEIGHT; i++) {
+      this.validMoves.push([
+        INVALID,
+        INVALID,
+        INVALID,
+        INVALID,
+        INVALID,
+        INVALID,
+        INVALID,
+        INVALID,
+      ]);
+    }
+  }
+  resetValidMoves() {
+    for (let i = 0; i < BOARD_HEIGHT; i++) {
+      for (let j = 0; j < BOARD_WIDTH; j++) {
+        this.validMoves[i][j] = INVALID;
+      }
+    }
+  }
+}
+
+class Tile {
+  constructor(pieceType, team) {
+    this.pieceType = pieceType;
+    this.team = team;
   }
 }
