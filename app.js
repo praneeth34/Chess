@@ -1,7 +1,7 @@
 const BOARD_WIDTH = 8;
 const BOARD_HEIGHT = 8;
 
-const TILE_SIZE = 5;
+const TILE_SIZE = 50;
 const WHITE_TILE_COLOR = "white";
 const BLACK_TILE_COLOR = "black";
 const HIGHLIGHT_COLOR = "red";
@@ -119,7 +119,7 @@ function onClick(event) {
 function checkPossiblePlays() {
   if (curX < 0 || curY < 0) return;
 
-  let tile = board.tiles[curY][curX];
+  var tile = board.tiles[curY][curX];
   if (tile.team === EMPTY || tile.team !== currentTeam) return;
 
   drawTile(curX, curY, HIGHLIGHT_COLOR);
@@ -216,7 +216,7 @@ function checkPossiblePlay(x, y) {
 }
 
 function checkPossibleMove(x, y) {
-  if (board.tile[y][x].team !== EMPTY) return false;
+  if (board.tiles[y][x].team !== EMPTY) return false;
   board.validMoves[y][x] = VALID;
   drawCircle(x, y, HIGHLIGHT_COLOR);
   return true;
