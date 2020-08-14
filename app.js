@@ -60,16 +60,19 @@ function onLoad() {
     "background-color:#171717;color:#FFF;text-align: center;"
   );
   content.appendChild(heading);
+  //chess canvas
   var mainChessBoard = document.createElement("canvas");
   mainChessBoard.setAttribute("id", "chessCanvas");
   mainChessBoard.setAttribute("width", "400");
   mainChessBoard.setAttribute("height", "400");
   mainChessBoard.setAttribute("style", "margin-left: 33%");
   content.appendChild(mainChessBoard);
+  //current player
   var player = document.createElement("h2");
   player.setAttribute("id", "currentTeamText");
   player.setAttribute("style", "text-align:center");
   content.appendChild(player);
+  //count aligned to right
   var whiteCountTitle = document.createElement("h2");
   whiteCountTitle.setAttribute("id", "whiteCountTitle");
   whiteCountTitle.innerText = "White pieces lost:";
@@ -84,9 +87,11 @@ function onLoad() {
   var blackCount = document.createElement("h3");
   blackCount.setAttribute("id", "blackCasualities");
   content.appendChild(blackCount);
+  //total victories by each team
   var totalCount = document.createElement("h2");
   totalCount.setAttribute("id", "totalVictories");
   content.appendChild(totalCount);
+  //rules aligned to right
   var rulesHeading = document.createElement("h2");
   rulesHeading.setAttribute("id", "rhead");
   rulesHeading.innerText = "Rules:";
@@ -96,6 +101,21 @@ function onLoad() {
   rules.setAttribute("id", "rules");
   content.appendChild(rulesHeading);
   content.appendChild(rules);
+  //reset button
+  var reset = document.createElement("button");
+  reset.innerText = "RESET GAME";
+  reset.setAttribute("id", "reset");
+  reset.setAttribute("onclick", "startGame()");
+  content.appendChild(reset);
+  //return to homepage
+  var home = document.createElement("button");
+  home.innerText = "RETURN HOME";
+  home.setAttribute("id", "home");
+  content.appendChild(home);
+  var homeLink = document.createElement("a");
+  homeLink.setAttribute("href", "index.html");
+  homeLink.appendChild(home);
+  content.appendChild(homeLink);
 
   document.getElementsByTagName("body")[0].appendChild(content);
   chessCanvas = document.getElementById("chessCanvas");
