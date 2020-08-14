@@ -2,8 +2,8 @@ const BOARD_WIDTH = 8;
 const BOARD_HEIGHT = 8;
 
 const TILE_SIZE = 50;
-const WHITE_TILE_COLOR = "white";
-const BLACK_TILE_COLOR = "black";
+const WHITE_TILE_COLOR = "rgb(186, 180, 179)";
+const BLACK_TILE_COLOR = "rgb(238, 238, 238)";
 const HIGHLIGHT_COLOR = "red";
 const WHITE = 0;
 const BLACK = 1;
@@ -21,12 +21,12 @@ const VALID = 1;
 const VALID_CAPTURE = 2;
 
 const piecesCharacters = {
-  0: "♙",
-  1: "♘",
-  2: "♗",
-  3: "♖",
-  4: "♕",
-  5: "♔",
+  0: "♟︎",
+  1: "♞",
+  2: "♝",
+  3: "♜",
+  4: "♛",
+  5: "♚",
 };
 
 let chessCanvas;
@@ -51,6 +51,53 @@ let blackVictories;
 document.addEventListener("DOMContentLoaded", onLoad);
 
 function onLoad() {
+  var content = document.createElement("div");
+  content.className = "content";
+  var heading = document.createElement("h1");
+  heading.innerText = "CHESS For 2-Players";
+  heading.setAttribute(
+    "style",
+    "background-color:#171717;color:#FFF;text-align: center;"
+  );
+  content.appendChild(heading);
+  var mainChessBoard = document.createElement("canvas");
+  mainChessBoard.setAttribute("id", "chessCanvas");
+  mainChessBoard.setAttribute("width", "400");
+  mainChessBoard.setAttribute("height", "400");
+  mainChessBoard.setAttribute("style", "margin-left: 33%");
+  content.appendChild(mainChessBoard);
+  var player = document.createElement("h2");
+  player.setAttribute("id", "currentTeamText");
+  player.setAttribute("style", "text-align:center");
+  content.appendChild(player);
+  var whiteCountTitle = document.createElement("h2");
+  whiteCountTitle.setAttribute("id", "whiteCountTitle");
+  whiteCountTitle.innerText = "White pieces lost:";
+  content.appendChild(whiteCountTitle);
+  var whiteCount = document.createElement("h3");
+  whiteCount.setAttribute("id", "whiteCasualities");
+  content.appendChild(whiteCount);
+  var blackCountTitle = document.createElement("h2");
+  blackCountTitle.innerText = "Black pieces lost:";
+  blackCountTitle.setAttribute("id", "blackCountTitle");
+  content.appendChild(blackCountTitle);
+  var blackCount = document.createElement("h3");
+  blackCount.setAttribute("id", "blackCasualities");
+  content.appendChild(blackCount);
+  var totalCount = document.createElement("h2");
+  totalCount.setAttribute("id", "totalVictories");
+  content.appendChild(totalCount);
+  var rulesHeading = document.createElement("h2");
+  rulesHeading.setAttribute("id", "rhead");
+  rulesHeading.innerText = "Rules:";
+  var rules = document.createElement("p");
+  rules.innerText =
+    "Chess is a two-player strategy board game played on a checkered board with 64 squares arranged in an 8×8 square grid. Each player begins with 16 pieces: one king, one queen, two rooks, two knights, two bishops, and eight pawns. Each piece type moves differently, with the most powerful being the queen and the least powerful the pawn. The objective is to checkmate the opponent's king by placing it under an inescapable threat of capture. To this end, a player's pieces are used to attack and capture the opponent's pieces, while supporting one another. During the game, play typically involves exchanging pieces for the opponent's similar pieces, and finding and engineering opportunities to trade advantageously or to get a better position. In addition to checkmate, a player wins the game if the opponent resigns, or, in a timed game, runs out of time. There are also several ways that a game can end in a draw.";
+  rules.setAttribute("id", "rules");
+  content.appendChild(rulesHeading);
+  content.appendChild(rules);
+
+  document.getElementsByTagName("body")[0].appendChild(content);
   chessCanvas = document.getElementById("chessCanvas");
   chessCtx = chessCanvas.getContext("2d");
   chessCanvas.addEventListener("click", onClick);
@@ -73,7 +120,7 @@ function startGame() {
   curY = -1;
 
   currentTeam = WHITE;
-  currentTeamText.textContent = "White's turn";
+  currentTeamText.textContent = "White's Have to Move";
 
   whiteCasualities = [0, 0, 0, 0, 0];
   blackCasualities = [0, 0, 0, 0, 0];
@@ -316,10 +363,10 @@ function moveSelectedPiece(x, y) {
 
 function changeCurrentTeam() {
   if (currentTeam === WHITE) {
-    currentTeamText.textContent = "Black's turn";
+    currentTeamText.textContent = "Black's Turn";
     currentTeam = BLACK;
   } else {
-    currentTeamText.textContent = "White's turn";
+    currentTeamText.textContent = "White's Turn";
     currentTeam = WHITE;
   }
 }
@@ -395,9 +442,9 @@ function drawPieces() {
       if (board.tiles[i][j].team === EMPTY) continue;
 
       if (board.tiles[i][j].team === WHITE) {
-        chessCtx.fillStyle = "#FF0000";
-      } else {
         chessCtx.fillStyle = "#0000FF";
+      } else {
+        chessCtx.fillStyle = "#171717";
       }
 
       chessCtx.font = "38px Arial";

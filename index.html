@@ -1,30 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Chess-2-Player</title>
     <meta charset="UTF-8" />
-    <script src="app.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Play Chess</title>
     <style>
-      h1,
-      h2,
-      h3 {
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        background: url(pexels-george-becker-131616.jpg) no-repeat;
+        background-size: 100%;
+      }
+      .main-box {
+        width: 350px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+      }
+      .main-box h1 {
         text-align: center;
+        font-size: 35px;
+        border-bottom: 6px solid #4caf50;
+        margin-bottom: 50px;
+        padding: 13px 0;
+      }
+      .main-box p {
+        text-align: center;
+        font-size: 20px;
+        padding: 13px 0;
+        border-bottom: 1px solid #4caf50;
+      }
+      .btn-2 {
+        width: 100%;
+        background: none;
+        border: 2px solid #4caf50;
+        color: white;
+        padding: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        margin: 12px 0;
+      }
+      .btn-1 {
+        width: 100%;
+        background: none;
+        border: 2px solid #4caf50;
+        color: white;
+        padding: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        margin: 12px 0;
+      }
+      .btn-1:hover {
+        background: #4caf50;
+      }
+      .btn-2:hover {
+        background: #4caf50;
       }
     </style>
   </head>
   <body>
-    <h1>Chess 2-Player</h1>
-    <canvas
-      id="chessCanvas"
-      width="400"
-      height="400"
-      style="margin-left: 37%;"
-    ></canvas>
-    <h2 id="currentTeamText"></h2>
-    <h2>White pieces lost:</h2>
-    <h3 id="whiteCasualities"></h2>
-    <h2>Black pieces lost:</h2>
-    <h3 id="blackCasualities"></h2>
-    <h2 id="totalVictories"></h2>
+    <script>
+      var mainContent = document.createElement("div");
+      mainContent.className = "main-box";
+
+      var title = document.createElement("h1");
+      title.innerHTML = "Welcome to Chess";
+      var subtitle = document.createElement("p");
+      subtitle.innerText = "Select Your Choice of Game";
+
+      var onePlayerButton = document.createElement("input");
+      onePlayerButton.className = "btn-1";
+      onePlayerButton.setAttribute("type", "button");
+      onePlayerButton.setAttribute("value", "Single Player");
+      onePlayerButton.setAttribute("href", "#");
+      var secondPlayerButton = document.createElement("input");
+      secondPlayerButton.className = "btn-2";
+      secondPlayerButton.setAttribute("type", "button");
+      secondPlayerButton.setAttribute("value", "2-Player");
+      secondPlayerButton.setAttribute("href", "2Pgame.html");
+
+      var link1 = document.createElement("a");
+      link1.setAttribute("href", "2Pgame.html");
+      link1.appendChild(secondPlayerButton);
+
+      var link2 = document.createElement("a");
+      link2.setAttribute("href", "1Pgame.html");
+      link2.appendChild(onePlayerButton);
+
+      mainContent.appendChild(title);
+      mainContent.appendChild(subtitle);
+      mainContent.appendChild(link1);
+      mainContent.appendChild(link2);
+
+      document.getElementsByTagName("body")[0].appendChild(mainContent);
+    </script>
   </body>
 </html>
